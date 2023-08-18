@@ -1,13 +1,13 @@
-import { useAccount, useConnect, useEnsName } from 'wagmi'
-import { InjectedConnector } from 'wagmi/connectors/injected'
+import { useAccount, useEnsName } from 'wagmi'
+import { useWeb3Modal } from '@web3modal/react'
 
 export function Profile() {
   const { address, isConnected } = useAccount()
   const { data: ensName } = useEnsName({ address })
-  const { connect } = useConnect({
-    connector: new InjectedConnector(),
-  })
+  const { open } = useWeb3Modal()
+
+ 
 
   if (isConnected) return <div>Connected to {ensName ?? address}</div>
-  return <button onClick={() => connect()}>Connect Wallet</button>
+  return <button onClick={() => open()}>Connect</button>
 }
